@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package pcr_management_system_pcrms;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import pcr_registration.pcr_registration;
 import pcr_modules.pcr_home;
 import java.sql.*;
@@ -22,6 +24,7 @@ public class pcr_login extends javax.swing.JFrame {
     public pcr_login() {
 
         initComponents();
+        
     }
 
     /**
@@ -136,6 +139,7 @@ public class pcr_login extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void pcr_numberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pcr_numberActionPerformed
