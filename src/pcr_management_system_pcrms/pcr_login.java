@@ -156,6 +156,7 @@ public class pcr_login extends javax.swing.JFrame {
                 pcr_home pcrhome = new pcr_home();
                 pcrhome.setVisible(true);
                 this.dispose();
+                //testing
             }
             else{
                 JOptionPane.showMessageDialog(null, "Incorrect Credentials");
