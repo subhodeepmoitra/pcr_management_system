@@ -85,8 +85,18 @@ public class pcr_registration extends javax.swing.JFrame {
         });
 
         exit.setText("EXIT");
+        exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitActionPerformed(evt);
+            }
+        });
 
         reset_data.setText("RESET DATA");
+        reset_data.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reset_dataActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -163,8 +173,8 @@ public class pcr_registration extends javax.swing.JFrame {
     private void register_pcrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_register_pcrActionPerformed
         // TODO add your handling code here:
         try{
-            String query = "";
-            con = DriverManager.getConnection("","","");
+            String query = "INSERT INTO `pcr_registration`(`pcr_number`, `pcr_type`, `station`, `password`) VALUES (?,?,?,?)";
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pcrms","root","");
             pst = con.prepareStatement(query);
             pst.setString(1, pcr_number.getText());
             String pcrtype = pcr_type.getSelectedItem().toString();
@@ -173,11 +183,26 @@ public class pcr_registration extends javax.swing.JFrame {
             pst.setString(4, password.getText());
             pst.executeUpdate();
             JOptionPane.showMessageDialog(null, "New PCR Van Registered Successfully");
+            pcr_number.setText("");
+            station.setText("");
+            password.setText("");
         }
         catch(Exception ex){
             JOptionPane.showMessageDialog(null, ex);
         }
     }//GEN-LAST:event_register_pcrActionPerformed
+
+    private void reset_dataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reset_dataActionPerformed
+        // TODO add your handling code here:
+        pcr_number.setText("");
+        station.setText("");
+        password.setText("");
+    }//GEN-LAST:event_reset_dataActionPerformed
+
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_exitActionPerformed
 
     /**
      * @param args the command line arguments
