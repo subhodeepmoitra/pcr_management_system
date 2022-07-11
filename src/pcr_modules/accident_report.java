@@ -5,6 +5,7 @@
 package pcr_modules;
 import java.sql.*;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -211,6 +212,11 @@ public class accident_report extends javax.swing.JFrame {
         });
 
         refresh_module.setText("Refresh Module");
+        refresh_module.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refresh_moduleActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -322,6 +328,29 @@ public class accident_report extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ex);
         }
     }//GEN-LAST:event_submitActionPerformed
+
+    private void refresh_moduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refresh_moduleActionPerformed
+        // TODO add your handling code here:
+        try{
+            //Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pcrms","root","");
+            Statement st = conn.createStatement();
+            String sql = "SELECT `location`, `accident_type`, `division`, `time` FROM `accident_reporting`";
+            ResultSet rst = st.executeQuery(sql);
+            while(rst.next()){
+                String location = rst.getString("location");
+                String accident_type = rst.getString("accident_type");
+                String division = rst.getString("division");
+                String time = rst.getString("time");
+                String tbData[] = {location,accident_type, division, time};
+                DefaultTableModel tblModel = (DefaultTableModel)display_table.getModel();
+                tblModel.addRow(tbData);
+            }
+            
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }//GEN-LAST:event_refresh_moduleActionPerformed
 
     /**
      * @param args the command line arguments
