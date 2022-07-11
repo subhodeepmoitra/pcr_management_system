@@ -3,12 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package pcr_modules;
+import java.sql.*;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author subho
  */
 public class accident_report extends javax.swing.JFrame {
+    Connection con = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
 
     /**
      * Creates new form accident_report
@@ -51,8 +56,9 @@ public class accident_report extends javax.swing.JFrame {
         reset = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        display_table = new javax.swing.JTable();
         home = new javax.swing.JButton();
+        refresh_module = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -105,6 +111,11 @@ public class accident_report extends javax.swing.JFrame {
         division.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SOUTH", "CENTRAL", "EAST", "WEST", "DOCK" }));
 
         submit.setText("SUBMIT");
+        submit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitActionPerformed(evt);
+            }
+        });
 
         reset.setText("RESET");
 
@@ -165,7 +176,7 @@ public class accident_report extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(51, 153, 255)));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        display_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -173,7 +184,7 @@ public class accident_report extends javax.swing.JFrame {
                 "LOCATION", "ACCIDENT TYPE", "DIVISION", "TIME"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(display_table);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -198,6 +209,8 @@ public class accident_report extends javax.swing.JFrame {
                 homeActionPerformed(evt);
             }
         });
+
+        refresh_module.setText("Refresh Module");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -229,9 +242,11 @@ public class accident_report extends javax.swing.JFrame {
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(20, 20, 20))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(621, 621, 621)
-                .addComponent(home, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(441, 441, 441))
+                .addGap(522, 522, 522)
+                .addComponent(refresh_module, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(home, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(416, 416, 416))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,7 +285,9 @@ public class accident_report extends javax.swing.JFrame {
                         .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(8, 8, 8)
-                .addComponent(home, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(home, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(refresh_module, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         pack();
@@ -287,6 +304,24 @@ public class accident_report extends javax.swing.JFrame {
         pcrhome.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_homeActionPerformed
+
+    private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
+        // TODO add your handling code here:
+        try{
+            String query = "INSERT INTO `accident_reporting`(`location`, `accident_type`, `division`) VALUES (?,?,?)";
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pcrms","root","");
+            pst = con.prepareStatement(query);
+            pst.setString(1, location.getText());
+            String type = accident_type.getSelectedItem().toString();
+            pst.setString(2, type);
+            String div = division.getSelectedItem().toString();
+            pst.setString(3, div);
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Accident Reported... ");
+        } catch (Exception ex){
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }//GEN-LAST:event_submitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -325,6 +360,7 @@ public class accident_report extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> accident_type;
+    private javax.swing.JTable display_table;
     private javax.swing.JComboBox<String> division;
     private javax.swing.JButton home;
     private javax.swing.JButton jButton1;
@@ -347,8 +383,8 @@ public class accident_report extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField location;
+    private javax.swing.JButton refresh_module;
     private javax.swing.JButton reset;
     private javax.swing.JButton submit;
     // End of variables declaration//GEN-END:variables
