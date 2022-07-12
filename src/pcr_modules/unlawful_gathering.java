@@ -123,6 +123,11 @@ public class unlawful_gathering extends javax.swing.JFrame {
         jButton3.setText("ROBBERY");
 
         jButton1.setText("ACCIDENT REPORT");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("ARMED THREAT");
 
@@ -347,9 +352,14 @@ public class unlawful_gathering extends javax.swing.JFrame {
             String query = "";
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pcrms","root","");
             pst = con.prepareStatement(query);
-            
+            pst.setString(1, location.getText());
+            pst.setString(2, estimate.getText());
+            String armedstatus = armed_status.getSelectedItem().toString();
+            pst.setString(3, armedstatus);
+            String div = division.getSelectedItem().toString();
+            pst.setString(4, div);
             pst.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Accident Reported... ");
+            JOptionPane.showMessageDialog(null, "Unlawful Gathering Reported... ");
         } catch (Exception ex){
             JOptionPane.showMessageDialog(null, ex);
         }
@@ -358,6 +368,13 @@ public class unlawful_gathering extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        accident_report acr = new accident_report();
+        acr.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
