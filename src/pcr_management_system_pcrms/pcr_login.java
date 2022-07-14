@@ -16,7 +16,9 @@ import javax.swing.JOptionPane;
 public class pcr_login extends javax.swing.JFrame {
         Connection con = null;
         PreparedStatement pst = null;
+        PreparedStatement pst1 = null;
         ResultSet rs = null;
+        ResultSet rst = null;
 
     /**
      * Creates new form pcr_login
@@ -160,7 +162,10 @@ public class pcr_login extends javax.swing.JFrame {
                 pcr_home pcrhome = new pcr_home();
                 pcrhome.setVisible(true);
                 this.dispose();
-                
+                String query1 = "INSERT INTO `pcr_login_log`(`pcr_number`) VALUES (?)";
+                pst1 = con.prepareStatement(query1);
+                pst1.setString(1, pcr_number.getText());
+                pst1.executeUpdate();
             }
             else{
                 JOptionPane.showMessageDialog(null, "Incorrect Credentials");

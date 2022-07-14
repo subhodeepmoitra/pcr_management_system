@@ -110,6 +110,11 @@ public class unlawful_gathering extends javax.swing.JFrame {
         });
 
         jButton2.setText("UNLAWFUL GATHERING");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton11.setText("DEAD-BODY REPORTING");
 
@@ -314,6 +319,7 @@ public class unlawful_gathering extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void homeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeActionPerformed
@@ -377,6 +383,13 @@ public class unlawful_gathering extends javax.swing.JFrame {
         acr.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        unlawful_gathering ulg = new unlawful_gathering();
+        ulg.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
