@@ -329,15 +329,17 @@ public class unlawful_gathering extends javax.swing.JFrame {
             //Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pcrms","root","");
             Statement st = conn.createStatement();
-            String sql = "SELECT `location`, `accident_type`, `division`, `time` FROM `unlawful_gathering_reporting`";
+            DefaultTableModel tblModel = (DefaultTableModel)display_table.getModel();
+            tblModel.setRowCount(0);
+            String sql = "SELECT `location`, `estimate`, `armedstatus`, `div`, `time` FROM `unlawful_gathering_reporting` ";
             ResultSet rst = st.executeQuery(sql);
             while(rst.next()){
                 String location = rst.getString("location");
-                String accident_type = rst.getString("accident_type");
-                String division = rst.getString("division");
+                String estimate = rst.getString("estimate");
+                String armedstatus = rst.getString("armedstatus");
+                String div = rst.getString("div");
                 String time = rst.getString("time");
-                String tbData[] = {location,accident_type, division, time};
-                DefaultTableModel tblModel = (DefaultTableModel)display_table.getModel();
+                String tbData[] = {location, estimate, armedstatus, div, time};
                 tblModel.addRow(tbData);
             }
 
