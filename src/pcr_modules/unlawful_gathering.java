@@ -349,7 +349,7 @@ public class unlawful_gathering extends javax.swing.JFrame {
     private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
         // TODO add your handling code here:
         try{
-            String query = "";
+            String query = "INSERT INTO `unlawful_gathering_reporting`(`location`, `estimate`, `armedstatus`, `div`) VALUES (?,?,?,?)";
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pcrms","root","");
             pst = con.prepareStatement(query);
             pst.setString(1, location.getText());
