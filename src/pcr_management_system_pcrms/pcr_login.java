@@ -155,20 +155,10 @@ public class pcr_login extends javax.swing.JFrame {
         try{
             URL whatismyip = new URL("http://checkip.amazonaws.com");
             BufferedReader in = null;
-            try {
-                in = new BufferedReader(new InputStreamReader(
-                    whatismyip.openStream()));
+                in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));
                 String ip = in.readLine();
                 System.out.println(ip);
-             } finally {
-                if (in != null) {
-                   try {
-                    in.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+                
             String query = "SELECT * FROM `pcr_registration` WHERE pcr_number = ? AND password = ?";
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pcrms","root","");
             pst = con.prepareStatement(query);
@@ -180,9 +170,10 @@ public class pcr_login extends javax.swing.JFrame {
                 pcr_home pcrhome = new pcr_home();
                 pcrhome.setVisible(true);
                 this.dispose();
-                String query1 = "INSERT INTO `pcr_login_log`(`pcr_number`) VALUES (?)";
+                String query1 = "INSERT INTO `pcr_login_log`(`pcr_number`, `ip_address`) VALUES (?,?)";
                 pst1 = con.prepareStatement(query1);
                 pst1.setString(1, pcr_number.getText());
+                pst1.setString(2, ip);
                 pst1.executeUpdate();
             }
             else{
