@@ -9,6 +9,8 @@ import pcr_registration.pcr_registration;
 import pcr_modules.pcr_home;
 import java.sql.*;
 import javax.swing.JOptionPane;
+import java.net.*;
+import java.io.*;
 /**
  *
  * @author subho
@@ -151,6 +153,22 @@ public class pcr_login extends javax.swing.JFrame {
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         // TODO add your handling code here:
         try{
+            URL whatismyip = new URL("http://checkip.amazonaws.com");
+            BufferedReader in = null;
+            try {
+                in = new BufferedReader(new InputStreamReader(
+                    whatismyip.openStream()));
+                String ip = in.readLine();
+                System.out.println(ip);
+             } finally {
+                if (in != null) {
+                   try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
             String query = "SELECT * FROM `pcr_registration` WHERE pcr_number = ? AND password = ?";
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/pcrms","root","");
             pst = con.prepareStatement(query);
